@@ -4,8 +4,7 @@ Go语言23种设计模式
 
 ## 创建型模式
 > 如何创建对象的模式?
-- [ ] 简单工厂模式（Simple Factory）
-- [ ] 工厂方法模式（Factory Method）
+- [x] [工厂方法模式（Factory Method）](https://mp.weixin.qq.com/s?__biz=MzkwMTE3NTY5MQ==&mid=2247483670&idx=1&sn=87a01497625bccf459876097ef841f18&chksm=c0b981f2f7ce08e450012ba36afc9f002025cbb66ccf0b414f116cf2443190063b2322458b89&token=1627432699&lang=zh_CN#rd)
 - [ ] 抽象工厂模式（Abstract Factory）
 - [ ] 创建者模式（Builder）
 - [ ] 原型模式（Prototype）
