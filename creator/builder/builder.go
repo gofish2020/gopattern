@@ -4,16 +4,32 @@ import (
 	"fmt"
 )
 
-//定义造饭的行为
-type Builder interface {
-	Hungry()
-	Buy()
-	Cook()
-	Eat()
-	Wash()
+//BigDinner 大餐对象
+type BigDinner struct {
+	where string
+	taste string
 }
 
-//由director决定整个造饭的过程
+func (t *BigDinner) Buy(tips string) { //因为要修改变量where值,所以t的类型是指针
+	t.where = tips
+}
+
+func (t *BigDinner) Cook(tips string) { //同上
+	t.taste = tips
+}
+
+func (t BigDinner) Print() { // 因为只是获取where和who的值,所以t是值类型
+	fmt.Printf("购物:%s , 味道:%s \n", t.where, t.taste)
+}
+
+//Builder 建造者的目的创建BigDinner对象
+type Builder interface {
+	Buy()
+	Cook()
+	CreateDinner() *BigDinner
+}
+
+//director 定义Builder抽象如何组合函数,创建BigDinner对象
 type director struct {
 	builder Builder
 }
@@ -22,12 +38,10 @@ func (t *director) SetBuilder(b Builder) {
 	t.builder = b
 }
 
-func (t *director) Dinner() {
-	t.builder.Hungry() //1.饿了
-	t.builder.Buy()    //2.买菜
-	t.builder.Cook()   //3.烧菜
-	t.builder.Eat()    //4.开吃
-	t.builder.Wash()   //5.刷碗
+func (t director) Construct() *BigDinner {
+	t.builder.Buy()                 //1.买菜
+	t.builder.Cook()                //2.烹饪
+	return t.builder.CreateDinner() //产生一顿丰盛的晚宴
 }
 
 func NewDirector(b Builder) *director { //这里director 我故意小写,这样必须调用该函数才能生成director对象
@@ -35,50 +49,36 @@ func NewDirector(b Builder) *director { //这里director 我故意小写,这样�
 }
 
 ///-----------buidler的实现结构体↓↓↓↓↓↓↓↓---------------
-//家庭造饭行为
-type Family struct {
+//FamilyBuilder 接口的家庭实现
+type FamilyBuilder struct {
+	Dinner *BigDinner
 }
 
-func (t Family) Hungry() {
-	fmt.Println("今天在家吃~~")
+func (t *FamilyBuilder) Buy() {
+	t.Dinner.Buy("超市")
 }
 
-func (t Family) Buy() {
-	fmt.Println("[家]超市买菜")
+func (t *FamilyBuilder) Cook() {
+	t.Dinner.Cook("清淡")
 }
 
-func (t Family) Cook() {
-	fmt.Println("[家]小锅炒菜")
+func (t *FamilyBuilder) CreateDinner() *BigDinner {
+	return t.Dinner
 }
 
-func (t Family) Eat() {
-	fmt.Println("[家]一个人吃")
+//RestaurantBuilder 接口的餐馆实现
+type RestaurantBuilder struct {
+	Dinner *BigDinner
 }
 
-func (t Family) Wash() {
-	fmt.Println("[家]一个人洗")
+func (t *RestaurantBuilder) Buy() {
+	t.Dinner.Buy("批发")
 }
 
-//餐馆造饭行为
-type Restaurant struct {
+func (t *RestaurantBuilder) Cook() {
+	t.Dinner.Cook("酸辣")
 }
 
-func (t Restaurant) Hungry() {
-	fmt.Println("今天下馆子~~")
-}
-
-func (t Restaurant) Buy() {
-	fmt.Println("[餐馆]批发市场买菜")
-}
-
-func (t Restaurant) Cook() {
-	fmt.Println("[餐馆]大锅爆炒")
-}
-
-func (t Restaurant) Eat() {
-	fmt.Println("[餐馆]客人用餐")
-}
-
-func (t Restaurant) Wash() {
-	fmt.Println("[餐馆]后厨刷碗")
+func (t *RestaurantBuilder) CreateDinner() *BigDinner {
+	return t.Dinner
 }

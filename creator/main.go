@@ -3,6 +3,8 @@ package main
 import (
 	"fmt"
 
+	"github.com/gofish2020/gopattern/creator/singleton"
+
 	"github.com/gofish2020/gopattern/creator/prototype"
 
 	"github.com/gofish2020/gopattern/creator/builder"
@@ -36,10 +38,10 @@ func main() {
 	second.NewDrug().Take()
 
 	fmt.Println("建造者模式")
-	b := builder.NewDirector(builder.Family{})
-	b.Dinner()
-	b.SetBuilder(builder.Restaurant{})
-	b.Dinner()
+	b := builder.NewDirector(&builder.FamilyBuilder{Dinner: new(builder.BigDinner)})
+	b.Construct().Print()
+	b.SetBuilder(&builder.RestaurantBuilder{Dinner: new(builder.BigDinner)})
+	b.Construct().Print()
 
 	fmt.Println("原型模式")
 	file := prototype.NewFile()
@@ -48,4 +50,23 @@ func main() {
 	clone.Context = "克隆文件"
 	fmt.Printf("file.Context: %v \nclone.Context: %v \n", file.Context, clone.Context)
 
+	fmt.Println("单例模式")
+
+	h1 := singleton.GetHungry()
+	h2 := singleton.GetHungry()
+	if h1 == h2 {
+		fmt.Println("h1==h2")
+	}
+
+	l1 := singleton.GetLazy()
+	l2 := singleton.GetLazy()
+	if l1 == l2 {
+		fmt.Println("l1==l2")
+	}
+
+	lo1 := singleton.GetOnce()
+	lo2 := singleton.GetOnce()
+	if lo1 == lo2 {
+		fmt.Println("lo1==lo2")
+	}
 }

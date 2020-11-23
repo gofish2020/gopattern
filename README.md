@@ -8,7 +8,7 @@ Go语言23种设计模式
 - [x] [抽象工厂模式（Abstract Factory）](https://mp.weixin.qq.com/s?__biz=MzkwMTE3NTY5MQ==&mid=2247483680&idx=1&sn=560e7b31a6ef3d38f3dffbe14b5434c5&chksm=c0b981c4f7ce08d2bbaf32bb7f2869f37da6998431d3ba740499949f8655825649aadc8bbf54&token=1777694435&lang=zh_CN#rd)
 - [ ] 创建者模式（Builder）
 - [x] [原型模式（Prototype）](https://mp.weixin.qq.com/s?__biz=MzkwMTE3NTY5MQ==&mid=2247483687&idx=1&sn=e3ba000b304915ba955288e8369a0fb4&chksm=c0b981c3f7ce08d522b5935c1270897de012dd7db81def5a629aa46e3769f8c1b79831528488&token=2069069943&lang=zh_CN#rd)
-- [ ] 单例模式（Singleton）
+- [x] [单例模式（Singleton）]()
 ## 结构型模式
 > 如何组合对象或类,形成更强大的结构?
 - [ ] 外观模式（Facade）
