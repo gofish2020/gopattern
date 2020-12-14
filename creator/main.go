@@ -7,7 +7,7 @@ import (
 
 	"github.com/gofish2020/gopattern/creator/prototype"
 
-	"github.com/gofish2020/gopattern/creator/builder"
+	bld "github.com/gofish2020/gopattern/creator/builder"
 
 	"github.com/gofish2020/gopattern/creator/abstract"
 
@@ -38,10 +38,13 @@ func main() {
 	second.NewDrug().Take()
 
 	fmt.Println("建造者模式")
-	b := builder.NewDirector(&builder.FamilyBuilder{Dinner: new(builder.BigDinner)})
+	b := bld.NewDirector(&bld.FamilyBuilder{Dinner: new(bld.BigDinner)})
 	b.Construct().Print()
-	b.SetBuilder(&builder.RestaurantBuilder{Dinner: new(builder.BigDinner)})
+	b.SetBuilder(&bld.RestaurantBuilder{Dinner: new(bld.BigDinner)})
 	b.Construct().Print()
+	fmt.Println("建造者模式--另一种简单写法")
+	bld.Construct(&bld.FamilyBuilder{Dinner: new(bld.BigDinner)}).Print()
+	bld.Construct(&bld.RestaurantBuilder{Dinner: new(bld.BigDinner)}).Print()
 
 	fmt.Println("原型模式")
 	file := prototype.NewFile()
