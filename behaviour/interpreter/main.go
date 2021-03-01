@@ -46,27 +46,20 @@ func (t PowerExpression) Interpreter(a, b int) int {
 }
 
 type Parser struct {
-	add   Expression
-	sub   Expression
-	mul   Expression
-	power Expression
+	expr1 Expression
+	expr2 Expression
 }
 
 // 1 + 2 * 3
 func (t Parser) interperter(a, b, c int) int { //强调行为模式　－－　解释的过程(解释器模式)　行为已经组织好了，只需要按步解释
-	return t.add.Interpreter(a, t.mul.Interpreter(b, c))
+	return t.expr1.Interpreter(a, t.expr2.Interpreter(b, c))
 }
 
 func main() {
 	add := AddExpression{}
-	sub := SubExpression{}
-	mul := MulExpression{}
 	power := PowerExpression{}
-	p := Parser{add: add, sub: sub, mul: mul, power: power}
+	p := Parser{expr1: add, expr2: power}
 	fmt.Println(p.interperter(1, 2, 3))
-
-	//强调结构模式　－－　构造的过程(组合模式) 自己去组织行为
-	//3^4 +1 -1
-	fmt.Println(sub.Interpreter(add.Interpreter(power.Interpreter(3, 4), 1), 1))
-
+	p.expr2 = MulExpression{}
+	fmt.Println(p.interperter(1, 2, 3))
 }
