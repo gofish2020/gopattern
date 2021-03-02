@@ -1,6 +1,8 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+)
 
 //Recorder 记录类
 type Recorder struct {
@@ -16,6 +18,10 @@ func (t *Recorder) Remove(index int) {
 		return
 	}
 	t.data = append(t.data[:index], t.data[index+1:]...)
+}
+
+func (t *Recorder) Iter() Iterator {
+	return Iterator{index: 0, Recorder: t}
 }
 
 //Iterator 迭代类，通过迭代可以取出Recorder中的所有的记录，但是又不会影响原有类结构代码
@@ -41,15 +47,33 @@ func (t *Iterator) HasNext() bool {
 	return true
 }
 
+type body1 struct {
+	b int
+}
+
+func (t *body1) SetB(b int) {
+	t.b = b
+}
+
+type body2 struct {
+	body1
+	b int
+}
+
 func main() {
+
+	// v1 := body1{b: 1}
+	// v2 := body2{v1, 3}
+	// v2.SetB(2)
+	// return
 	rec := Recorder{}
 	rec.Add("first")
 	rec.Add("second")
 	rec.Add("third")
 	rec.Add("fourth")
 	rec.Add("fifth")
-
-	iter := Iterator{index: 0, Recorder: &rec}
+	iter := rec.Iter()
+	//iter := Iterator{index: 0, Recorder: &rec}
 	for iter.HasNext() {
 		fmt.Println(iter.Next())
 	}
