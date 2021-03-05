@@ -49,6 +49,7 @@ func (t NormalVisitor) BuyStawberry(c Strawberry) {
 //-------------------------水果接口-------------------
 type Fruit interface {
 	Accept(v Visitor)
+	GetPrice() int
 }
 
 //Apple 苹果类
